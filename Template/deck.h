@@ -3,10 +3,15 @@
 #define deck_h
 #include "randgen.h"
 #include "card.h"
+#include "hand.h"
+#include "player.h"
 #include <string>
 #include <iostream>
 
+
+
 class deck {
+  friend class hand;
 public:
   //constructors
   deck(); //default - fill 52 dCards

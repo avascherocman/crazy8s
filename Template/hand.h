@@ -2,16 +2,17 @@
 #ifndef hand_h
 #define hand_h
 #include <string>
-#include "card.h"
 #include "deck.h"
 #include <iostream>
 
 class hand {
+  friend class deck;
 public:
   //constructors
   hand();
 
   //functions
+  void fillHand(deck d);
   void addCard(card c);
   void remCard(card c);
 
@@ -23,8 +24,13 @@ private:
 };
 
 hand::hand() {
+  
+}
+
+void hand::fillHand(deck d) {
   for (int i = 0; i < 8; i++) {
-    //add cards into hand from deck
+    hCards[i] = d.dCards[i];
+    numCards = 8;
   }
 }
 

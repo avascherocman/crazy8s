@@ -1,2 +1,4 @@
 ﻿  crazy8s.cpp
-  Template.vcxproj -> C:\Users\InterlinkAdmin\Documents\Git\crazy8s\crazy8s\x64\Debug\crazy8s.exe
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\hand.h(32): error C2027: use of undefined type 'deck'
+  c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\hand.h(9): note: see declaration of 'deck'
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\hand.h(32): error C2228: left of '.dCards' must have class/struct/union
