@@ -2,102 +2,47 @@
 #ifndef hand_h
 #define hand_h
 #include <string>
+#include "card.h"
+#include "deck.h"
+#include <iostream>
 
-class card {
+class hand {
 public:
   //constructors
-  card(); //default
-  card(int v, int s); //fill
+  hand();
 
-                      //functions
-  void setValue(int v);
-  int getValue();
-  void setSuit(int s);
-  char getSuit();
-  std::string printCard(card &c);
-  std::string toStrL();
-  std::string toStr();
-
-
+  //functions
+  void addCard(card c);
+  void remCard(card c);
 
 private:
   //data
-  int value; //1 to 12
-  int suit; //3 to 6 - hearts, diamonds, clubs, spades
+  card hCards[50];
+  int numCards;
 
 };
 
-card::card() {           //random fill
-  RandGen r;
-  suit = r.RandInt(3, 6);
-  value = r.RandInt(1, 12);
-
-}
-
-card::card(int v, int s) {
-  value = v;
-  suit = s;                      //fill
-}
-
-void card::setValue(int v) {
-  value = v;
-}
-
-void card::setSuit(int s) {
-  suit = s;
-}
-
-int card::getValue() {
-  return value;
-}
-
-char card::getSuit() {
-  return suit;
-}
-
-std::string card::printCard(card & c) {
-  std::string s;
-  s = " _____ \n|" + std::to_string(value) + "   " + std::to_string(value) + "|\n|  " + c.toStrL() + "  |\n|  " + c.toStrL() + "  |\n|" +
-    std::to_string(value) + "___" + std::to_string(value) + "|\n";
-  return s;
-}
-
-std::string card::toStrL() {
-  std::string s;
-  switch (suit) {
-  case 3:
-    s = "H";
-    break;
-  case 4:
-    s = "D";
-    break;
-  case 5:
-    s = "C";
-    break;
-  case 6:
-    s = "S";
-    break;
+hand::hand() {
+  for (int i = 0; i < 8; i++) {
+    //add cards into hand from deck
   }
-  return s;
 }
 
-std::string card::toStr() {
-  std::string s = std::to_string(value);
-  switch (suit) {
-  case 3:
-    s += "H";
-    break;
-  case 4:
-    s += "D";
-    break;
-  case 5:
-    s += "C";
-    break;
-  case 6:
-    s += "S";
-    break;
-  }
-  return s;
+void hand::addCard(card c) {
+  //add card into hand from card that was passed in
+  numCards++;
+  hCards[numCards] = c;
 }
+
+void hand::remCard(card c) {
+  for (int i = 0; i < numCards; i++) {
+    if (c.toStr() == hCards[i].toStr()) {
+      for (int j = i; j < numCards; j++) {
+        hCards[j] = hCards[j + 1];
+      }
+    }
+  }
+}
+
 
 #endif

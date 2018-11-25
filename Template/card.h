@@ -3,6 +3,7 @@
 #define card_h
 #include "randgen.h"
 #include <string>
+#include <iostream>
 
 class card {
 public:

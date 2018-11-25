@@ -1,40 +1,33 @@
 /* Ava Scherocman
-  Crazy 8s Project
-  11/24/18
+Crazy 8s Project
+11/24/18
 */
-
-#include "stdafx.h"
-#include<SFML/Graphics.hpp>
-#include<SFML/Window.hpp>
-#include<SFML/System.hpp>
-#include<SFML/Audio.hpp>
-#include<SFML/Network.hpp>
-#include<iostream>
-#include <string.h>
+#include <iostream>
 #include <iomanip>
+#include <string>
+#include "stdafx.h"
+#include "card.h"
+#include "deck.h"
+#include "hand.h"
+#include "player.h"
 
-int main()
-{
-	sf::RenderWindow win(sf::VideoMode(1000, 1000), "Crazy Eights");
-  while (win.isOpen()) {
-    sf::Event event;
+card pPlay();
+card dPlay();
 
-    while (win.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        win.close();
-      }
-      if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-      {
-        
-      }
-      win.clear(sf::Color::Black);
+int main() {
+  player Player;
+  player Dealer;
+  deck D;
+  D.shuffle(52);
 
-    }
-  }
-    return 0;
+
+
+
+
+
+  
+
+
+  return 0;
 }
 
-/*sf::Texture i;
-i.loadFromFile("C:\\Users\\InterlinkAdmin\\Pictures\\jenga.jpg");
-sf::Sprite s;
-s.setTexture(i);*/
