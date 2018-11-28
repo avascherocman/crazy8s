@@ -16,8 +16,8 @@ public:
   int getValue();
   void setSuit(int s);
   char getSuit();
-  std::string printCard(card &c);
-  std::string toStrL();
+  std::string printArt(card &c);
+  std::string toStrLet();
   std::string toStr();
  
 
@@ -57,14 +57,14 @@ char card::getSuit() {
   return suit;
 }
 
-std::string card::printCard(card & c){
+std::string card::printArt(card & c){
   std::string s;
-  s = " _____ \n|" + std::to_string(value) + "   " + std::to_string(value) + "|\n|  " + c.toStrL() + "  |\n|  " +c.toStrL()  + "  |\n|" +
+  s = " _____ \n|" + std::to_string(value) + "   " + std::to_string(value) + "|\n|  " + c.toStrLet() + "  |\n|  " +c.toStrLet()  + "  |\n|" +
     std::to_string(value) + "___" + std::to_string(value) + "|\n";
   return s;  
 }
 
-std::string card::toStrL() {
+std::string card::toStrLet() {
   std::string s;
   switch (suit) {
     case 3:

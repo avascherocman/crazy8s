@@ -1,9 +1,57 @@
-#pragma 
 #pragma once
 #ifndef player_h
 #define player_h
+#include "stdafx.h"
+#include <string>
+#include <iostream>
+#include "randgen.h"
+#include "deck.h"
+#include "hand.h"
+#include "card.h"
+
+
+class player {
+  friend class hand;
+  friend class card;
+  friend class deck;
+public:
+  //constructors
+  player(); //default - fill
+  player(int n); //fill with given name
+
+  //functions
+  int fillHand(deck d, int n);
+
+private:
+  int score;
+  std::string name;
+  hand pHand;
+};
+
+player::player() {         
+  name += "player";
+  score = 0;
+}
+
+player::player(int n) {    
+  score = 0;
+}
+
+int player::fillHand(deck d, int n) {
+  int r = pHand.fillHand(d, n);
+  return r;
+}
+
+
+#endif
+
+/*#pragma once
+#ifndef player_h
+#define player_h
+#include "stdafx.h"
 #include "randgen.h"
 #include "hand.h"
+#include "deck.h"
 #include <string>
 #include <iostream>
 
@@ -13,10 +61,14 @@ public:
   player(); //default
   player(std::string n); //fill
 
-                //functions
+                         //functions
+  int fillHand(deck d, int n);
+
 private:
+  friend class hand;
+  friend class deck;
   //data
-  hand Hand;
+  hand pHand;
   std::string name;
   int score;
 
@@ -29,9 +81,12 @@ player::player() {           //random fill
 }
 
 player::player(std::string n) {
-  name = name;
+  name = n;
   score = 0;
 }
 
-
-#endif
+int player::fillHand(deck d, int n) {
+  int r = pHand.fillHand(d, n);
+  return r;
+}
+#endif*/

@@ -152,6 +152,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="card.h" />
+    <ClInclude Include="deck.h" />
     <ClInclude Include="hand.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="stdafx.h" />

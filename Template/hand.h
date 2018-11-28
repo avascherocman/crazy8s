@@ -1,25 +1,30 @@
 #pragma once
 #ifndef hand_h
 #define hand_h
+#include "stdafx.h"
 #include <string>
+#include "card.h"
 #include "deck.h"
 #include <iostream>
 
 class hand {
   friend class deck;
+  friend class card;
+  friend class player;
 public:
   //constructors
   hand();
 
   //functions
-  void fillHand(deck d);
+  int fillHand(deck d, int n);
   void addCard(card c);
   void remCard(card c);
+  void showHand();
 
 private:
   //data
   card hCards[50];
-  int numCards;
+  int nHandCards;
 
 };
 
@@ -27,28 +32,33 @@ hand::hand() {
   
 }
 
-void hand::fillHand(deck d) {
-  for (int i = 0; i < 8; i++) {
+int hand::fillHand(deck d, int n) {
+  for (int i = n; i < n+8; i++) {
     hCards[i] = d.dCards[i];
-    numCards = 8;
+    nHandCards = 8;
+    return n + 8;
   }
 }
 
 void hand::addCard(card c) {
   //add card into hand from card that was passed in
-  numCards++;
-  hCards[numCards] = c;
+  nHandCards++;
+  hCards[nHandCards] = c;
 }
 
 void hand::remCard(card c) {
-  for (int i = 0; i < numCards; i++) {
+  for (int i = 0; i < nHandCards; i++) {
     if (c.toStr() == hCards[i].toStr()) {
-      for (int j = i; j < numCards; j++) {
+      for (int j = i; j < nHandCards; j++) {
         hCards[j] = hCards[j + 1];
       }
     }
   }
 }
 
-
+void hand::showHand() {
+  for (int i = 0; i < nHandCards; i++) {
+    std::cout << hCards[i].printArt(hCards[i]);
+  }
+}
 #endif

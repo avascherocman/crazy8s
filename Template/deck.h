@@ -1,25 +1,23 @@
 #pragma once
 #ifndef deck_h
 #define deck_h
+#include "stdafx.h"
 #include "randgen.h"
 #include "card.h"
-#include "hand.h"
-#include "player.h"
 #include <string>
-#include <iostream>
-
-
 
 class deck {
   friend class hand;
+  friend class card;
+  friend class player;
 public:
   //constructors
-  deck(); //default - fill 52 dCards
-  deck(int n); //fill - fill that number of dCards randomly
+  deck(); //default - fill 52 cards
+  deck(int n); //fill - fill that number of cards randomly
           
   void shuffle(int n);
-  void printW(int n);
-  void printP(int n);
+  void printStr(int n);
+  void printArt(int n);
 
 
 private:
@@ -41,14 +39,14 @@ deck::deck() {           //52 card fill
   }
 }
 
-deck::deck(int n) {    //random fill that number of dCards
+deck::deck(int n) {    //random fill that number of cards
   RandGen rd;
   int i = 0;
   while (i <n){
     int j = rd.RandInt(3, 6);
     int k = rd.RandInt(1, 12);
-        dCards[i].setSuit(j);
-        dCards[i].setValue(k);
+    dCards[i].setSuit(j);
+    dCards[i].setValue(k);
         i++;
   }
 }
@@ -68,15 +66,15 @@ void deck::shuffle(int n) {
   }
 }
 
-void deck::printW(int n) {
+void deck::printStr(int n) {
   for (int p = 0; p < n; p++) {
-  std::cout << dCards[p].toStr() << std::endl;
+    std::cout << dCards[p].toStr() << std::endl;
   }
 }
 
-void deck::printP(int n) {
+void deck::printArt(int n) {
   for (int p = 0; p < n; p++) {
-   std::cout << dCards[p].printCard(dCards[p]) << std::endl;
+    std::cout << dCards[p].printArt(dCards[p]) << std::endl;
   }
 }
 
