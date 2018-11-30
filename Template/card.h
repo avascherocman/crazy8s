@@ -59,9 +59,29 @@ char card::getSuit() {
 
 std::string card::printArt(card & c){
   std::string s;
-  s = " _____ \n|" + std::to_string(value) + "   " + std::to_string(value) + "|\n|  " + c.toStrLet() + "  |\n|  " +c.toStrLet()  + "  |\n|" +
-    std::to_string(value) + "___" + std::to_string(value) + "|\n";
-  return s;  
+  int v = c.getValue();
+  std::string val;
+  switch (v) {
+  default:
+    val = std::to_string(v);
+    break;
+  case 10:
+    val = "J";
+    break;
+  case 11:
+    val = "Q";
+    break;
+  case 12:
+    val = "K";
+    break;
+  }
+  char box = 3;
+
+  s = "    _____       _____ \n   |" + val + "   " + val + "|" +
+    "     | "  + box + box + box +  " |\n   |  " + c.toStrLet() + "  |     |" + box + box + box + box + box +
+    "|\n   |  " + c.toStrLet() + "  |     |" + box + box + box + box + box + "|  " +
+    "\n   |" + val + "___" + val + "|     |" + "_"+box + box + box + "_|\n";
+   return s;  
 }
 
 std::string card::toStrLet() {

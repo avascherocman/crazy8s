@@ -17,10 +17,11 @@ public:
   void printStr(int n);
   void printArt(int n);
 
+  card dCards[100];
 
 private:
   //data
-  card dCards[100];
+
 
 };
 

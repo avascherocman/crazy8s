@@ -18,10 +18,11 @@ public:
   void remCard(card c);
   void showHand();
 
-private:
-  //data
   card hCards[50];
   int nHandCards;
+private:
+  //data
+
 
 };
 

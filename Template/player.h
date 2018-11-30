@@ -18,11 +18,14 @@ public:
                  //functions
   int fillHand(deck d, int n);
   void showHand();
-
-private:
+  
   int score;
   std::string name;
   hand pHand;
+
+private:
+
+
 };
 
 player::player() {
