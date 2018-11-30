@@ -11,8 +11,7 @@ Crazy 8s Project
 #include "hand.h"
 #include "player.h"
 
-card pPlay();
-card dPlay();
+void printGame(player P, player D);
 
 int main() {
   int cCard = 0;
@@ -23,10 +22,20 @@ int main() {
   D.shuffle(52);
   Player.fillHand(D, cCard);
   Dealer.fillHand(D, cCard);
-  Player.showHand();
+  printGame(Player, Dealer);
 
+  
+  system("Pause");
 
 
   return 0;
 }
 
+void printGame(player D, player P, card & topCard) {
+  std::cout << "Crazy Eights\n" << "\n";
+  std::cout << "Dealer\n";
+  char box = 3;
+  std::cout << box << " "<<box <<" "<< box << " " << box<<" " << box<<" " << box <<" "<< box <<" "<< box <<"\n"<<"\n";
+  std::cout<<
+
+}

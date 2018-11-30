@@ -3,14 +3,11 @@
 #define hand_h
 #include "stdafx.h"
 #include <string>
-#include "card.h"
 #include "deck.h"
 #include <iostream>
 
 class hand {
   friend class deck;
-  friend class card;
-  friend class player;
 public:
   //constructors
   hand();
@@ -29,15 +26,15 @@ private:
 };
 
 hand::hand() {
-  
+  nHandCards = 0;
 }
 
 int hand::fillHand(deck d, int n) {
   for (int i = n; i < n+8; i++) {
     hCards[i] = d.dCards[i];
     nHandCards = 8;
-    return n + 8;
   }
+  return n + 8;
 }
 
 void hand::addCard(card c) {

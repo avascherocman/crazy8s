@@ -8,8 +8,6 @@
 
 class deck {
   friend class hand;
-  friend class card;
-  friend class player;
 public:
   //constructors
   deck(); //default - fill 52 cards

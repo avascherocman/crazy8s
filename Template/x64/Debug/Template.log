@@ -1,3 +1,2 @@
 ﻿  crazy8s.cpp
-c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(26): error C2039: 'showHand': is not a member of 'player'
-  c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\player.h(13): note: see declaration of 'player'
+  Template.vcxproj -> C:\Users\InterlinkAdmin\Documents\Git\crazy8s\crazy8s\x64\Debug\crazy8s.exe
