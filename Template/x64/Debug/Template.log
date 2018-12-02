@@ -1,2 +1,3 @@
 ﻿  crazy8s.cpp
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(89): warning C4553: '==': result of expression not used; did you intend '='?
   Template.vcxproj -> C:\Users\InterlinkAdmin\Documents\Git\crazy8s\crazy8s\x64\Debug\crazy8s.exe

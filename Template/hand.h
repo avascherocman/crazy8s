@@ -33,8 +33,8 @@ hand::hand() {
 int hand::fillHand(deck d, int n) {
   for (int i = n; i < n+8; i++) {
     hCards[i] = d.dCards[i];
-    nHandCards = 8;
   }
+  nHandCards = 8;
   return n + 8;
 }
 

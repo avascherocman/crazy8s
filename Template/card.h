@@ -104,7 +104,22 @@ std::string card::toStrLet() {
 }
 
 std::string card::toStr() {
-  std::string s = std::to_string(value);
+  std::string s;
+  switch (value) {
+  default:
+    s = std::to_string(value);
+    break;
+  case 10:
+    s = "J";
+    break;
+  case 11:
+    s = "Q";
+    break;
+  case 12:
+    s = "K";
+    break;
+  }
+
   switch (suit) {
   case 3:
     s += "H";
