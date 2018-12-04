@@ -31,14 +31,13 @@ hand::hand() {
 }
 
 int hand::fillHand(deck d, int n) {
-  int i=0;
-  do {
-    hCards[i] = d.dCards[i];
-    //std::cout << n+9;
-    i++;
-  } while (i < n+9 );
-  nHandCards = 8;
-  return n + 8;
+  //yes, I'm aware this is absolutely horrifying and NOT the way to do it. however, I was having problems with variables
+  //incrementing randomly when using a loop. unfortunately this is the only way
+  hCards[0] = d.dCards[0];
+  hCards[1] = d.dCards[1];
+  hCards[2] = d.dCards[2];
+  nHandCards = 2;
+  return nHandCards;
 }
 
 void hand::addCard(card c) {

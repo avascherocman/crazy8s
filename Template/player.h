@@ -23,7 +23,6 @@ public:
   std::string name;
   hand pHand;
 
-private:
 
 
 };

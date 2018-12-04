@@ -107,7 +107,7 @@ void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & 
       if (play == P.pHand.hCards[i].toStr()) {    //test if the inputted matches a card in the player's hand
         if (P.pHand.hCards[i].getSuit() == topCard.getSuit() || P.pHand.hCards[i].getValue() == topCard.getValue()) {  //if either the suit or the value of the card matches that of the top card in the pile, it can be played
           topCard = P.pHand.hCards[i];        //top card is now that card in the hand
-          for (int k = i; k < P.pHand.nHandCards; k++) {
+          for (int k = i; k < P.pHand.nHandCards-1; k++) {
             P.pHand.hCards[k] = P.pHand.hCards[k + 1];      //move every card back one in the hand so that a card is removed
           }
 
@@ -133,28 +133,30 @@ void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & 
 
 void dTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D) {
   int match = 0;
+  int i = 0;
+  std::cout << "\n" << "\n";
   do {
-    std::cout << "\n" << "\n";
-    for (int i = 0; i < De.pHand.nHandCards; i++) {
+    do {
       if (De.pHand.hCards[i].getSuit() == topCard.getSuit() || De.pHand.hCards[i].getValue() == topCard.getValue()) {
-        topCard = De.pHand.hCards[i];
-        for (int k = i; k < De.pHand.nHandCards; k++) {
-          De.pHand.hCards[k] = De.pHand.hCards[k + 1];
-          De.pHand.nHandCards--;
-          match = 1;
-        }
-      }
-
+          topCard = De.pHand.hCards[i];
+          for (int k = i; k < De.pHand.nHandCards; k++) {
+            De.pHand.hCards[k] = De.pHand.hCards[k + 1];
+            De.pHand.nHandCards--;
+            match = 1;
+           }
+         }
+      i++;
+    } while (i < De.pHand.nHandCards);
       if (match == 0) {
         De.pHand.nHandCards++;
         De.pHand.hCards[De.pHand.nHandCards] = D.dCards[cCard];
         cCard++;
         
       }
-    } 
-
-
   } while (match == 0);
+
+
+
   turn = 0;
   std::cout << "\n";
   system("Pause");
