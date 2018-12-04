@@ -31,9 +31,12 @@ hand::hand() {
 }
 
 int hand::fillHand(deck d, int n) {
-  for (int i = n; i < n+8; i++) {
+  int i=0;
+  do {
     hCards[i] = d.dCards[i];
-  }
+    //std::cout << n+9;
+    i++;
+  } while (i < n+9 );
   nHandCards = 8;
   return n + 8;
 }

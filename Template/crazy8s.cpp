@@ -46,12 +46,6 @@ void printGame(player D, player P, card & topCard) {
   std::cout << "  ?  "  <<"  ?  "  << "  ?  "   << "  ?  "  << "  ?  "  << "  ?  " << "  ?  "  << "  ?  "  <<"\n"<<"\n";
   std::cout << topCard.printArt(topCard) << "\n" << "\n" << "Player\n"<<"  ";
 
- 
-  for (int i = 0; i < P.pHand.nHandCards; i++) {
-    std::cout << P.pHand.hCards[i].toStr() << "   ";
-  }
-
-  std::cout << "\n" << "\n";
 
 
 }
@@ -60,6 +54,8 @@ void pTurn(player P, card & topCard, int & turn) {
   for (int i = 0; i < P.pHand.nHandCards; i++) {
     std::cout << P.pHand.hCards[i].toStr() << "   ";
   }
+  std::cout << "\n" << "\n";
+
   std::string play;
 std::cout<< "Type in the card you would like to play, or type \"draw\" to add a card to your hand\n";
   std::getline(std::cin, play);
@@ -86,7 +82,7 @@ std::cout<< "Type in the card you would like to play, or type \"draw\" to add a 
     } while (i < P.pHand.nHandCards);
   }
   std::cout << topCard.printArt(topCard);
-  turn == 1;
+  turn = 1;
   system("Pause");
 
 }
