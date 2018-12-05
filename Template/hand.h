@@ -13,9 +13,10 @@ public:
   hand();
 
   //functions
-  int fillHand(deck d, int n);
+  int fillDHand(deck d, int n);
+  int fillPHand(deck d, int n);
   void addCard(card c);
-  void remCard(card c);
+  void remCard(card c, int p);
   void showHand();
 
   card hCards[50];
@@ -30,14 +31,25 @@ hand::hand() {
   nHandCards = 0;
 }
 
-int hand::fillHand(deck d, int n) {
-  //yes, I'm aware this is absolutely horrifying and NOT the way to do it. however, I was having problems with variables
-  //incrementing randomly when using a loop. unfortunately this is the only way
-  hCards[0] = d.dCards[0];
-  hCards[1] = d.dCards[1];
-  hCards[2] = d.dCards[2];
-  nHandCards = 2;
+int hand::fillPHand(deck d, int n) {
+  int i = 0;
+  do {
+    hCards[i] = d.dCards[i];
+    i++;
+  } while (i < ( n + 9));
+  nHandCards = 8;
   return nHandCards;
+}
+
+int hand::fillDHand(deck d, int n) {
+  int i = 0;
+  int k = 8;
+  do {
+    hCards[i] = d.dCards[i+8];
+    i++;
+  } while (i < 16);
+  nHandCards = 8;
+  return 16;
 }
 
 void hand::addCard(card c) {
@@ -46,14 +58,15 @@ void hand::addCard(card c) {
   hCards[nHandCards] = c;
 }
 
-void hand::remCard(card c) {
-  for (int i = 0; i < nHandCards; i++) {
+void hand::remCard(card c, int p) {
+  for (int i = p; i < nHandCards; i++) {
     if (c.toStr() == hCards[i].toStr()) {
       for (int j = i; j < nHandCards; j++) {
         hCards[j] = hCards[j + 1];
       }
     }
   }
+  nHandCards--;
 }
 
 void hand::showHand() {

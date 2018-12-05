@@ -1,0 +1,4 @@
+doesn't get rid of played cards
+adds two cards at a time
+dealer only plays sometimes (fix loop probably)
+added cards don't stay in hand

@@ -37,7 +37,7 @@ player::player(int n) {
 }
 
 int player::fillHand(deck d, int n) {
-  int r = pHand.fillHand(d, n);
+  int r = pHand.fillPHand(d, n);
   return r;
 }
 

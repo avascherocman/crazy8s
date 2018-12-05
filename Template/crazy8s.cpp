@@ -28,11 +28,12 @@ int main() {
   player Dealer;
   deck D;
   D.shuffle(52);
-  cCard = Player.fillHand(D, cCard);  //returns current position in deck
-  cCard = Dealer.fillHand(D, cCard);  //so we can continue where we left off with topcard
-  topCard = D.dCards[cCard + 1];    //top card is equal to next card in the deck
+  cCard = Player.pHand.fillPHand(D, cCard);  //returns current position in deck
+  cCard = Dealer.pHand.fillDHand(D, cCard);  //so we can continue where we left off with topcard
   cCard++;
-  
+  topCard = D.dCards[cCard];    //top card is equal to next card in the deck
+
+
   do {
     if (turn == 0) {   //player
       printGame(Player, Dealer, topCard);
@@ -58,7 +59,7 @@ void printTopCard(card & topCard) {
 }
 
 void printPHand(player P) {
-  std::cout << "Player\n";
+  std::cout << "Player\n" << P.pHand.nHandCards;
   for (int i = 0; i < P.pHand.nHandCards; i++) {    //output player's hand of cards as two character strings - value and suit
     std::cout << P.pHand.hCards[i].toStr() << "   ";
   }
@@ -86,48 +87,33 @@ void printGame(player P, player De, card & topCard) {
 
 void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D) {
 
-  std::string play;   //used to get input from user in form of a string - two characters for a card or "draw"
+  std::string play="";                                    //used to get input from user in form of a string - two characters for a card or "draw"
+
   std::cout << "Type in the card you would like to play, or type \"draw\" to add a card to your hand\n";
+
   std::getline(std::cin, play);
 
   //get input from user and test
   if (play == "draw") {
-    P.pHand.nHandCards++;     //add one to number of hand cards
-    P.pHand.hCards[P.pHand.nHandCards] = D.dCards[cCard]; //set that position in the array to the next card in the deck
-    cCard++;                  //add one to counter for num cards used in the deck
-    system("CLS");            //refresh screen so new card will show up
+    cCard++;
+    P.pHand.nHandCards++;
+    P.pHand.addCard(D.dCards[cCard]);
+    
+    system("CLS");
     printGame(P, De, topCard);
     pTurn(P, De, topCard, turn, cCard, D);
 
   }
-  else { //if play is not draw
-    int i = 0;
-    int match = 0;
-    do {
-      if (play == P.pHand.hCards[i].toStr()) {    //test if the inputted matches a card in the player's hand
-        if (P.pHand.hCards[i].getSuit() == topCard.getSuit() || P.pHand.hCards[i].getValue() == topCard.getValue()) {  //if either the suit or the value of the card matches that of the top card in the pile, it can be played
-          topCard = P.pHand.hCards[i];        //top card is now that card in the hand
-          for (int k = i; k < P.pHand.nHandCards-1; k++) {
-            P.pHand.hCards[k] = P.pHand.hCards[k + 1];      //move every card back one in the hand so that a card is removed
-          }
-
-          system("CLS");
-          std::cout << "\nMatch! Dealer's turn.\n";
-          match = 1;
-          turn = 1;
+  else {
+    for (int i = 0; i < P.pHand.nHandCards; i++) {
+      if (play == P.pHand.hCards[i].toStr()) {
+        if (P.pHand.hCards[i].getSuit() == topCard.getSuit() || P.pHand.hCards[i].getValue() == topCard.getValue()) {
+          topCard = P.pHand.hCards[i];
+          P.pHand.remCard(P.pHand.hCards[i], i);
           break;
         }
       }
-      else {    //if the inputted string doesn't match a card in the player's hand
-        i++;    //increment i and try again
-      }
-    } while (i < P.pHand.nHandCards);     //do this until i > number of cards in the hand
-
-    if (match == 0) {
-      std::cout << "Not a match. Dealer's turn.\n";       //card inputted is not a match
-      turn = 1;
     }
-    system("Pause");
   }
 }
 
@@ -139,18 +125,18 @@ void dTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & 
     do {
       if (De.pHand.hCards[i].getSuit() == topCard.getSuit() || De.pHand.hCards[i].getValue() == topCard.getValue()) {
           topCard = De.pHand.hCards[i];
-          for (int k = i; k < De.pHand.nHandCards; k++) {
-            De.pHand.hCards[k] = De.pHand.hCards[k + 1];
-            De.pHand.nHandCards--;
+          De.pHand.remCard(De.pHand.hCards[i], i);
             match = 1;
-           }
+            std::cout << "match";
+            break;
          }
       i++;
     } while (i < De.pHand.nHandCards);
       if (match == 0) {
         De.pHand.nHandCards++;
-        De.pHand.hCards[De.pHand.nHandCards] = D.dCards[cCard];
         cCard++;
+        De.pHand.addCard(D.dCards[cCard]);
+
         
       }
   } while (match == 0);
