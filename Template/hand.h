@@ -43,13 +43,12 @@ int hand::fillPHand(deck d, int n) {
 
 int hand::fillDHand(deck d, int n) {
   int i = 0;
-  int k = 8;
   do {
-    hCards[i] = d.dCards[i+8];
+    hCards[i] = d.dCards[i];
     i++;
-  } while (i < 16);
-  nHandCards = 8;
-  return 16;
+  } while (i < (n + 9));
+  nHandCards = 16;
+  return nHandCards;
 }
 
 void hand::addCard(card c) {
@@ -59,14 +58,20 @@ void hand::addCard(card c) {
 }
 
 void hand::remCard(card c, int p) {
-  for (int i = p; i < nHandCards; i++) {
-    if (c.toStr() == hCards[i].toStr()) {
-      for (int j = i; j < nHandCards; j++) {
-        hCards[j] = hCards[j + 1];
+  if (p == nHandCards) {
+    nHandCards--;
+  }
+  else {
+    for (int i = p; i < nHandCards; i++) {
+      if (c.toStr() == hCards[i].toStr()) {
+        for (int j = i; j < nHandCards; j++) {
+          hCards[j] = hCards[j + 1];
+        }
+        break;
       }
     }
+    nHandCards--;
   }
-  nHandCards--;
 }
 
 void hand::showHand() {

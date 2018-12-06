@@ -12,11 +12,11 @@ Crazy 8s Project
 #include "player.h"
 
 //function prototypes
-void printGame(player P, player De, card & topCard);
-void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D);  //playerTurn
-void dTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D);  //dealerTurn
-void printPHand(player P);
-void printDHand(player De);
+void printGame(player& Player, player & Dealer, card & topCard);
+void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D);  //playerTurn
+void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D);  //dealerTurn
+void printPHand(player & Player);
+void printDHand(player &Dealer);
 void printTopCard(card & topCard);
 
 int main() {
@@ -32,7 +32,7 @@ int main() {
   cCard = Dealer.pHand.fillDHand(D, cCard);  //so we can continue where we left off with topcard
   cCard++;
   topCard = D.dCards[cCard];    //top card is equal to next card in the deck
-
+  
 
   do {
     if (turn == 0) {   //player
@@ -58,34 +58,34 @@ void printTopCard(card & topCard) {
   std::cout << topCard.printArt(topCard) << "\n" << "\n";   //print art of top card and player card header
 }
 
-void printPHand(player P) {
-  std::cout << "Player\n" << P.pHand.nHandCards;
-  for (int i = 0; i < P.pHand.nHandCards; i++) {    //output player's hand of cards as two character strings - value and suit
-    std::cout << P.pHand.hCards[i].toStr() << "   ";
+void printPHand(player & Player) {
+  std::cout << "Player\n";
+  for (int i = 0; i < Player.pHand.nHandCards; i++) {    //output player's hand of cards as two character strings - value and suit
+    std::cout << Player.pHand.hCards[i].toStr() << "   ";
   }
   std::cout << "\n";
 }
 
-void printDHand(player De) {
+void printDHand(player &Dealer) {
   std::cout << "Dealer\n";
-  for (int i = 0; i < De.pHand.nHandCards; i++) {   //loop and output a question mark for each card in the hand
+  for (int i = 0; i < Dealer.pHand.nHandCards; i++) {   //loop and output a question mark for each card in the hand
     std::cout << "  ?  ";
   }
   std::cout << "\n";
 }
 
-void printGame(player P, player De, card & topCard) {
+void printGame(player &Player, player& Dealer, card & topCard) {
                                              //print out name of game, dealer name, and dealer cards, formatted as a 
   std::cout << "Crazy Eights\n" << "\n";      //number of question marks so you can't see what cards the dealer has
-  printDHand(De);
+  printDHand(Dealer);
   printTopCard(topCard);
-  printPHand(P);
+  printPHand(Player);
 
   std::cout << "\n" << "\n";
   
 }
 
-void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D) {
+void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D) {
 
   std::string play="";                                    //used to get input from user in form of a string - two characters for a card or "draw"
 
@@ -96,20 +96,21 @@ void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & 
   //get input from user and test
   if (play == "draw") {
     cCard++;
-    P.pHand.nHandCards++;
-    P.pHand.addCard(D.dCards[cCard]);
+    Player.pHand.addCard(D.dCards[cCard]);
     
     system("CLS");
-    printGame(P, De, topCard);
-    pTurn(P, De, topCard, turn, cCard, D);
+    printGame(Player, Dealer, topCard);
+    pTurn(Player, Dealer, topCard, turn, cCard, D);
 
   }
   else {
-    for (int i = 0; i < P.pHand.nHandCards; i++) {
-      if (play == P.pHand.hCards[i].toStr()) {
-        if (P.pHand.hCards[i].getSuit() == topCard.getSuit() || P.pHand.hCards[i].getValue() == topCard.getValue()) {
-          topCard = P.pHand.hCards[i];
-          P.pHand.remCard(P.pHand.hCards[i], i);
+    for (int i = 0; i < Player.pHand.nHandCards; i++) {
+      if (play == Player.pHand.hCards[i].toStr()) {
+        if (Player.pHand.hCards[i].getSuit() == topCard.getSuit() || Player.pHand.hCards[i].getValue() == topCard.getValue()) {
+          topCard = Player.pHand.hCards[i];
+          Player.pHand.remCard(Player.pHand.hCards[i], i);
+          turn = 1;
+          system("CLS");
           break;
         }
       }
@@ -117,25 +118,24 @@ void pTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & 
   }
 }
 
-void dTurn(player P, player De, card & topCard, int & turn, int & cCard, deck & D) {
+void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D) {
   int match = 0;
   int i = 0;
   std::cout << "\n" << "\n";
   do {
     do {
-      if (De.pHand.hCards[i].getSuit() == topCard.getSuit() || De.pHand.hCards[i].getValue() == topCard.getValue()) {
-          topCard = De.pHand.hCards[i];
-          De.pHand.remCard(De.pHand.hCards[i], i);
+      if (Dealer.pHand.hCards[i].getSuit() == topCard.getSuit() || Dealer.pHand.hCards[i].getValue() == topCard.getValue()) {
+          topCard = Dealer.pHand.hCards[i];
+          Dealer.pHand.remCard(Dealer.pHand.hCards[i], i);
             match = 1;
-            std::cout << "match";
             break;
          }
       i++;
-    } while (i < De.pHand.nHandCards);
+    } while (i < Dealer.pHand.nHandCards);
       if (match == 0) {
-        De.pHand.nHandCards++;
+        Dealer.pHand.nHandCards++;
         cCard++;
-        De.pHand.addCard(D.dCards[cCard]);
+        Dealer.pHand.addCard(D.dCards[cCard]);
 
         
       }
