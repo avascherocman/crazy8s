@@ -43,12 +43,14 @@ int hand::fillPHand(deck d, int n) {
 
 int hand::fillDHand(deck d, int n) {
   int i = 0;
+  int k = 8;
   do {
-    hCards[i] = d.dCards[i];
+    hCards[i] = d.dCards[k];
     i++;
-  } while (i < (n + 9));
-  nHandCards = 16;
-  return nHandCards;
+    k++;
+  } while (i < (8));
+  nHandCards = 8;
+  return 16;
 }
 
 void hand::addCard(card c) {

@@ -13,8 +13,8 @@ Crazy 8s Project
 
 //function prototypes
 void printGame(player& Player, player & Dealer, card & topCard);
-void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D);  //playerTurn
-void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D);  //dealerTurn
+void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D, int & win, player & winner);  //playerTurn
+void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D, int & win, player & winner);  //dealerTurn
 void printPHand(player & Player);
 void printDHand(player &Dealer);
 void printTopCard(card & topCard);
@@ -22,7 +22,8 @@ void printTopCard(card & topCard);
 int main() {
   int turn = 0;     //0 or 1 if player or dealer's turn
   int cCard = 0;   //numbered position of current card in deck
-  int winner = 0; //1 if there is a winner, tested every single time
+  int win = 0; //1 if there is a winner, tested every single time
+  player winner;
   card topCard;    //top card that is displayed and plays are tested against
   player Player;
   player Dealer;
@@ -33,21 +34,30 @@ int main() {
   cCard++;
   topCard = D.dCards[cCard];    //top card is equal to next card in the deck
   
-
+  if (cCard == 52) {
+    D.shuffle(52);
+    cCard = 0;
+  }
   do {
     if (turn == 0) {   //player
       printGame(Player, Dealer, topCard);
-      pTurn(Player, Dealer, topCard, turn, cCard, D);
+      pTurn(Player, Dealer, topCard, turn, cCard, D, win, winner);
     }
     else if (turn ==1) {    //dealer
       printDHand(Dealer);
       printTopCard(topCard);
-      dTurn(Player, Dealer, topCard, turn, cCard, D);
+      dTurn(Player, Dealer, topCard, turn, cCard, D, win, winner);
     }
-  } while (winner == 0);
+  } while (win == 0);
 
-  if (winner == 1) {
-    std::cout << "someone won the game!";
+  if (win == 1) {
+    if (winner.name == Player.name) {
+      std::cout << "you won the game!";
+    }
+    else {
+      std::cout << "the dealer won the game!";
+    }
+
   }
   
   
@@ -85,7 +95,7 @@ void printGame(player &Player, player& Dealer, card & topCard) {
   
 }
 
-void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D) {
+void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D, int & win, player & winner) {
 
   std::string play="";                                    //used to get input from user in form of a string - two characters for a card or "draw"
 
@@ -100,7 +110,7 @@ void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & c
     
     system("CLS");
     printGame(Player, Dealer, topCard);
-    pTurn(Player, Dealer, topCard, turn, cCard, D);
+    pTurn(Player, Dealer, topCard, turn, cCard, D, win, winner);
 
   }
   else {
@@ -111,6 +121,11 @@ void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & c
           Player.pHand.remCard(Player.pHand.hCards[i], i);
           turn = 1;
           system("CLS");
+          if (Player.pHand.nHandCards == 0) {
+            win = 1;
+            winner.name = "player";
+            
+          }
           break;
         }
       }
@@ -118,7 +133,7 @@ void pTurn(player & Player, player & Dealer, card & topCard, int & turn, int & c
   }
 }
 
-void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D) {
+void dTurn(player & Player, player & Dealer, card & topCard, int & turn, int & cCard, deck & D, int & win, player & winner) {
   int match = 0;
   int i = 0;
   std::cout << "\n" << "\n";
