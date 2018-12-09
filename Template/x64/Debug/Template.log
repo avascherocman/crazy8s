@@ -1,2 +1,7 @@
 ﻿  crazy8s.cpp
-  Template.vcxproj -> C:\Users\InterlinkAdmin\Documents\Git\crazy8s\crazy8s\x64\Debug\crazy8s.exe
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(204): error C2181: illegal else without matching if
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(253): error C2059: syntax error: '}'
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(224): error C2059: syntax error: ';'
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(260): error C2601: 'dTurn': local function definitions are illegal
+  c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(220): note: this line contains a '{' which has not yet been matched
+c:\users\interlinkadmin\documents\git\crazy8s\crazy8s\template\crazy8s.cpp(221): fatal error C1075: '{': no matching token found
