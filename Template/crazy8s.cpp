@@ -31,6 +31,7 @@ player Dealer;
 deck D;
 
 int main() {
+  wild.setValue(0);
   D.shuffle(52);
   cCard = Player.pHand.fillPHand(D, cCard);  //returns current position in deck
   cCard = Dealer.pHand.fillDHand(D, cCard);  //so we can continue where we left off with topcard
@@ -45,11 +46,13 @@ int main() {
     if (turn == 0) {   //player
       printGame();
       pTurn();
+      wild.setValue(0);
     }
     else if (turn == 1) {    //dealer
       printDHand(Dealer);
       printTopCard(topCard);
       dTurn();
+      wild.setValue(0);
     }
   } while (win == 0);
 
@@ -114,9 +117,8 @@ void pTurn() {
       system("CLS");
       printGame();
       pTurn();
-
     }
-    else {    //if play is not a draw
+    else {
       for (int i = 0; i < Player.pHand.nHandCards; i++) { //loop through all cards in hand
         if (play == Player.pHand.hCards[i].toStr()) {   //if the play is actually one of the cards in the hand
           if (Player.pHand.hCards[i].getSuit() == topCard.getSuit() || Player.pHand.hCards[i].getValue() == topCard.getValue()) {
@@ -149,139 +151,127 @@ void pTurn() {
               win = 1;
               winner.name = "player";
             }
-            else {
-              std::string play = ""; //used to get input from user in form of a string - two characters for a card or "draw"
+          }
+        }
+      }
+    }
+  }
+  else if (wild.getValue() == 1) {
+    std::string play = ""; //used to get input from user in form of a string - two characters for a card or "draw"
 
-              std::cout << "You can play any card of this suit. Enter which card you'd like to play or \"draw\" to draw";
-              std::getline(std::cin, play);
+    std::cout << "You can play any card of this suit. Enter which card you'd like to play or \"draw\" to draw";
+    std::getline(std::cin, play);
 
-              //get input from user and test
-              if (play == "draw") {
-                cCard++;
-                Player.pHand.addCard(D.dCards[cCard]);
+    //get input from user and test
+    if (play == "draw") {
+      cCard++;
+      Player.pHand.addCard(D.dCards[cCard]);
 
-                system("CLS");
-                printGame();
-                pTurn();
+      system("CLS");
+      printGame();
+      pTurn();
 
+    }
+    else {    //if play is not a draw
+      for (int i = 0; i < Player.pHand.nHandCards; i++) { //loop through all cards in hand
+        if (play == Player.pHand.hCards[i].toStr()) {   //if the play is actually one of the cards in the hand
+          if (Player.pHand.hCards[i].getSuit() == topCard.getSuit()) {
+            topCard = Player.pHand.hCards[i];     //if the play has the same suit and value, set the top card to that card ^
+            int val = Player.pHand.hCards[i].getValue();  //get value of this card to see if it's an 8 for wild cards
+            if (val == 8) { //if it's wild...
+              wild.setValue(1);
+              char s;
+              std::cout << "Enter which suit you would like to play: H, D, C, S\n";
+              std::cin >> s;
+              switch (s) {
+              case 'H':
+                topCard.setSuit(3);
+                break;
+              case 'D':
+                topCard.setSuit(4);
+                break;
+              case 'C':
+                topCard.setSuit(5);
+                break;
+              case 'S':
+                topCard.setSuit(6);
               }
-              else {    //if play is not a draw
-                for (int i = 0; i < Player.pHand.nHandCards; i++) { //loop through all cards in hand
-                  if (play == Player.pHand.hCards[i].toStr()) {   //if the play is actually one of the cards in the hand
-                    if (Player.pHand.hCards[i].getSuit() == topCard.getSuit()) {
-                      topCard = Player.pHand.hCards[i];     //if the play has the same suit and value, set the top card to that card ^
-                      int val = Player.pHand.hCards[i].getValue();  //get value of this card to see if it's an 8 for wild cards
-                      if (val == 8) { //if it's wild...
-                        wild.setValue(1);
-                        char s;
-                        std::cout << "Enter which suit you would like to play: H, D, C, S\n";
-                        std::cin >> s;
-                        switch (s) {
-                        case 'H':
-                          topCard.setSuit(3);
-                          break;
-                        case 'D':
-                          topCard.setSuit(4);
-                          break;
-                        case 'C':
-                          topCard.setSuit(5);
-                          break;
-                        case 'S':
-                          topCard.setSuit(6);
-                        }
-                      }
-                      Player.pHand.remCard(Player.pHand.hCards[i], i);  //remove the card from the hand to finish the play
-                      turn = 1;
-                      system("CLS");
-                      if (Player.pHand.nHandCards == 0) {
-                        win = 1;
-                        winner.name = "player";
-                      }
-                    }
-                  }
-                }
-              }
-            } else {
-            std::string play = ""; //used to get input from user in form of a string - two characters for a card or "draw"
-
-            std::cout << "You can play any card of this suit. Enter which card you'd like to play or \"draw\" to draw";
-            std::getline(std::cin, play);
-
-            //get input from user and test
-            if (play == "draw") {
-              cCard++;
-              Player.pHand.addCard(D.dCards[cCard]);
-
-              system("CLS");
-              printGame();
-              pTurn();
-
             }
-            else {    //if play is not a draw
-              for (int i = 0; i < Player.pHand.nHandCards; i++) { //loop through all cards in hand
-                if (play == Player.pHand.hCards[i].toStr()) {   //if the play is actually one of the cards in the hand
-                  if (Player.pHand.hCards[i].getSuit() == topCard.getSuit() {
-                    topCard = Player.pHand.hCards[i];     //if the play has the same suit and value, set the top card to that card ^
-                    int val = Player.pHand.hCards[i].getValue();  //get value of this card to see if it's an 8 for wild cards
-                    if (val == 8) { //if it's wild...
-                      wild.setValue(1);
-                      char s;
-                      std::cout << "Enter which suit you would like to play: H, D, C, S\n";
-                      std::cin >> s;
-                      switch (s) {
-                      case 'H':
-                        topCard.setSuit(3);
-                        break;
-                      case 'D':
-                        topCard.setSuit(4);
-                        break;
-                      case 'C':
-                        topCard.setSuit(5);
-                        break;
-                      case 'S':
-                        topCard.setSuit(6);
-                      }
-                    }
-                    Player.pHand.remCard(Player.pHand.hCards[i], i);  //remove the card from the hand to finish the play
-                    turn = 1;
-                    system("CLS");
-                    if (Player.pHand.nHandCards == 0) {
-                      win = 1;
-                      winner.name = "player";
-                    }
-                  }
-          }
-
-
-
-
-
-
- void dTurn() {
-  int match = 0;
-  int i = 0;
-  std::cout << "\n" << "\n";
-            do {
-              do {
-                if (Dealer.pHand.hCards[i].getSuit() == topCard.getSuit() || Dealer.pHand.hCards[i].getValue() == topCard.getValue()) {
-                  topCard = Dealer.pHand.hCards[i];
-                  Dealer.pHand.remCard(Dealer.pHand.hCards[i], i);
-                  match = 1;
-                  break;
-                }
-                i++;
-              } while (i < Dealer.pHand.nHandCards);
-              if (match == 0) {
-                Dealer.pHand.nHandCards++;
-                cCard++;
-                Dealer.pHand.addCard(D.dCards[cCard]);
-
-
-              }
-            } while (match == 0);
-
-            turn = 0;
-            std::cout << "\n";
-            system("Pause");
+            Player.pHand.remCard(Player.pHand.hCards[i], i);  //remove the card from the hand to finish the play
+            turn = 1;
             system("CLS");
+            if (Player.pHand.nHandCards == 0) {
+              win = 1;
+              winner.name = "player";
+            }
           }
+        }
+      }
+    }
+  }
+}
+    
+
+
+
+
+
+void dTurn() {
+  if (wild.getValue() == 0) {
+    int match = 0;
+    int i = 0;
+    std::cout << "\n" << "\n";
+    do {
+      do {
+        if (Dealer.pHand.hCards[i].getSuit() == topCard.getSuit() || Dealer.pHand.hCards[i].getValue() == topCard.getValue()) {
+          topCard = Dealer.pHand.hCards[i];
+          Dealer.pHand.remCard(Dealer.pHand.hCards[i], i);
+          match = 1;
+          break;
+        }
+        i++;
+      } while (i < Dealer.pHand.nHandCards);
+      if (match == 0) {
+        Dealer.pHand.nHandCards++;
+        cCard++;
+        Dealer.pHand.addCard(D.dCards[cCard]);
+     }
+    } while (match == 0);
+    turn = 0;
+    std::cout << "\n";
+    system("Pause");
+    system("CLS");
+  }
+  else if (wild.getValue()==1) {
+      int match = 0;
+      int i = 0;
+      std::cout << "\n" << "\n";
+      do {
+        do {
+          if (Dealer.pHand.hCards[i].getSuit() == topCard.getSuit()) {
+            topCard = Dealer.pHand.hCards[i];
+            Dealer.pHand.remCard(Dealer.pHand.hCards[i], i);
+            match = 1;
+            break;
+          }
+          i++;
+        } while (i < Dealer.pHand.nHandCards);
+        if (match == 0) {
+          do {
+          Dealer.pHand.nHandCards++;
+          cCard++;
+          Dealer.pHand.addCard(D.dCards[cCard]);
+
+
+          } while (Dealer.pHand.hCards[i].getSuit() != topCard.getSuit());
+      } 
+
+      turn = 0;
+      std::cout << "\n";
+      system("Pause");
+      system("CLS");
+      wild.setValue(0);
+    } while (match == 0);
+  }
+
+}
